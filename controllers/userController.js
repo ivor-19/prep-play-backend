@@ -1,8 +1,8 @@
-import { UserSW } from '../models/model.js'
+import { User } from '../models/model.js'
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await UserSW.findAll();
+    const users = await User.findAll();
     res.status(200).json({
       status: "Success",
       message: "Data fetched successfully",
@@ -18,8 +18,8 @@ export const getUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { first_name, last_name, email, password } = req.body;
-    const user = await UserSW.create({ first_name, last_name, email, password });
+    const { first_name, last_name, username, email, password, phone_number, place_of_assignment, role, condition } = req.body;
+    const user = await User.create({ first_name, last_name, username, email, password, phone_number, place_of_assignment, role, condition });
     res.status(201).json({
       status: "Success",
       message: "Data created successfully",

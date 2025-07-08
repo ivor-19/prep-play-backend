@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
 import bcrypt from 'bcrypt';
 
-export const UserSW = sequelize.define('User_sw', {
+export const User = sequelize.define('User', {
   first_name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -10,6 +10,19 @@ export const UserSW = sequelize.define('User_sw', {
   last_name: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false
+  },
+  place_of_assignment: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phone_number: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   email: {
     type: DataTypes.STRING,
@@ -19,6 +32,16 @@ export const UserSW = sequelize.define('User_sw', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  role: {
+    type: DataTypes.ENUM('admin', 'social_worker'),
+    allowNull: false,
+    defaultValue: 'social_worker' // Set default role
+  },
+  condition: {
+    type: DataTypes.ENUM('pending', 'approved', 'blocked', 'rejected'),
+    allowNull: false,
+    defaultValue: 'pending'
   }
 }, {
   hooks: {
@@ -35,14 +58,3 @@ export const UserSW = sequelize.define('User_sw', {
   }
 });
 
-
-export const Post = sequelize.define('Post', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  }
-});

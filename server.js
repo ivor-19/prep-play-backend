@@ -5,7 +5,7 @@ import cors from 'cors';
 import { sequelize } from './config/database.js';
 import { UserSW , Post } from './models/model.js';
 
-import userSWRoutes from './routes/userSWRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
@@ -20,20 +20,15 @@ app.use(express.json());
 //   credentials: true
 // }));
 
-
-// 🧩 Setup relationships
-UserSW.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(UserSW, { foreignKey: 'userId' });
-
 // 🛣️ Routes
-app.use('/api/sw', userSWRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 // 🚀 Sync and start server
 try {
-  await sequelize.sync();
+  // await sequelize.sync();
   // await sequelize.sync({ alter: true }); // Alters existing tables to match models
-  // await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
+  await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
   console.log('✅ DB synced');
 
   const PORT = process.env.PORT || 3000;
