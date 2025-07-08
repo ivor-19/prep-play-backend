@@ -26,14 +26,14 @@ app.use('/api/auth', authRoutes);
 
 // 🚀 Sync and start server
 try {
-  // await sequelize.sync();
+  await sequelize.sync();
   // await sequelize.sync({ alter: true }); // Alters existing tables to match models
-  await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
+  // await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
   console.log('✅ DB synced');
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
   });
 } catch (err) {
   console.error('❌ Error connecting to DB:', err);
