@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import { sequelize } from './config/database.js';
-import { UserSW , Post } from './models/model.js';
 
 import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
