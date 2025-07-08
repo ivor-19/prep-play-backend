@@ -29,17 +29,6 @@ Post.belongsTo(UserSW, { foreignKey: 'userId' });
 app.use('/api/sw', userSWRoutes);
 app.use('/api/auth', authRoutes);
 
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config();
-}
-
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_NAME:', process.env.DB_NAME);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PORT:', process.env.DB_PORT);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '✅ Exists' : '❌ Missing');
-console.log('🧠 Final DB_HOST at runtime:', process.env.DB_HOST);
-
 // 🚀 Sync and start server
 try {
   await sequelize.sync();
