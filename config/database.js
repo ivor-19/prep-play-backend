@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Use DATABASE_URL if available (Railway provides this automatically)
-const databaseUrl = process.env.DATABASE_URL || 
+const databaseUrl = process.env.DB_URL || 
   `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
 export const sequelize = new Sequelize(databaseUrl, {
