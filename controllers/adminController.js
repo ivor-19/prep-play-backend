@@ -6,7 +6,7 @@ export const getAllSessions = async (req, res) => {
     const sessions = await ChildSession.findAll({
       include: [{
         model: User,
-        as: 'social_worker',
+        as: 'user',
         attributes: ['first_name', 'last_name', 'email']
       }],
       order: [['created_at', 'DESC']]

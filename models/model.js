@@ -147,3 +147,13 @@ export const ChildSession = sequelize.define('ChildSession', {
     }
   }
 });
+
+ChildSession.belongsTo(User, {
+  foreignKey: 'social_worker_id',
+  as: 'user'
+});
+
+User.hasMany(ChildSession, {
+  foreignKey: 'social_worker_id',
+  as: 'child_sessions'
+});

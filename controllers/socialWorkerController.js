@@ -34,7 +34,7 @@ export const getSessionsBySocialWorker = async (req, res) => {
       where: { social_worker_id: req.params.social_worker_id },
       include: [{
         model: User,
-        as: 'social_worker',
+        as: 'user',
         attributes: ['first_name', 'last_name']
       }],
       order: [['created_at', 'DESC']]
