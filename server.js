@@ -29,9 +29,9 @@ app.use('/api/admin', adminRoutes);
 
 // 🚀 Sync and start server
 try {
-  await sequelize.sync();
+  // await sequelize.sync();
   // await sequelize.sync({ alter: true }); // Alters existing tables to match models
-  // await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
+  await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
   console.log('✅ DB synced');
 
   const PORT = process.env.PORT || 3000;

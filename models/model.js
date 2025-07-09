@@ -3,6 +3,12 @@ import { sequelize } from '../config/database.js';
 import bcrypt from 'bcrypt';
 
 export const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.UUID, // 👈 this must match the FK type
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
   first_name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -91,7 +97,7 @@ export const ChildSession = sequelize.define('ChildSession', {
     allowNull: true
   },
   avatar_data: {
-    type: DataTypes.JSONB,
+    type: DataTypes.JSON,
     allowNull: true,
     defaultValue: {
       head: null,
@@ -99,7 +105,7 @@ export const ChildSession = sequelize.define('ChildSession', {
     }
   },
   emotional_expression: {
-    type: DataTypes.JSONB,
+    type: DataTypes.JSON,
     allowNull: true,
     defaultValue: {
       method: null,
@@ -113,7 +119,7 @@ export const ChildSession = sequelize.define('ChildSession', {
     allowNull: true
   },
   tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
     allowNull: true,
     defaultValue: []
   },

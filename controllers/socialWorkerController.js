@@ -1,4 +1,4 @@
-import { ChildSession, User } from "../models/model";
+import { ChildSession, User } from "../models/model.js";
 
 export const createSession = async (req, res) => {
   try {

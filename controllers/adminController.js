@@ -1,4 +1,4 @@
-import { ChildSession, User } from "../models/model";
+import { ChildSession, User } from "../models/model.js";
 
 // Get all sessions (for admins)
 export const getAllSessions = async (req, res) => {
