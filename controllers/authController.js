@@ -10,7 +10,7 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ state: "Failed", error: 'Invalid email or password' });
     }
 
     if (user.condition !== 'approved') {
@@ -22,12 +22,12 @@ export const login = async (req, res) => {
       } else if (user.condition === 'pending') {
         errorMessage = 'Account is pending approval. Please wait or contact support.';
       }
-      return res.status(403).json({ status: "Failed", error: errorMessage });
+      return res.status(403).json({ state: "Failed", error: errorMessage });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ status: "Failed", error: 'Invalid email or password' });
+      return res.status(401).json({ state: "Failed", error: 'Invalid email or password' });
     }
 
     const token = jwt.sign(
@@ -37,7 +37,7 @@ export const login = async (req, res) => {
     );
 
     res.status(200).json({
-      status: "Success",
+      state: "Success",
       message: 'Login successful',
       token,
       user: { 
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ 
-      status: "Failed",
+      state: "Failed",
       error: err.message 
     });
   }
