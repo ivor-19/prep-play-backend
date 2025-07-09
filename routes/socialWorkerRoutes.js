@@ -1,9 +1,8 @@
 import express from 'express';
 import {
   createSession,
-  getAllSessions,
   getSessionsBySocialWorker,
-} from '../controllers/childSessionController.js';
+} from '../controllers/socialWorkerController.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();

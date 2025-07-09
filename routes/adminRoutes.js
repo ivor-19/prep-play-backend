@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   getAllSessions,
-} from '../controllers/childSessionController.js';
+} from '../controllers/adminController.js';
 import { authorize, verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
