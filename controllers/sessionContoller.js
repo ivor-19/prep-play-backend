@@ -44,3 +44,19 @@ export const getSessionsBySocialWorker = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getAllSessions = async (req, res) => {
+  try {
+    const sessions = await ChildSession.findAll({
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: ['first_name', 'last_name', 'email']
+      }],
+      order: [['created_at', 'DESC']]
+    });
+    res.json(sessions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

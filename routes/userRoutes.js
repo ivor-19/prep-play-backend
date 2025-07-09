@@ -4,7 +4,7 @@ import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', verifyToken, getUsers);
-router.post('/', createUser);
+router.get('/get', verifyToken, getUsers);
+router.post('/create', createUser);
 
 export default router;

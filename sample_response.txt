@@ -22,5 +22,5 @@
  
   "session_notes": "social_worker_observations_message",
   "tags": ["trauma", "family_issues", "behavioral"],
-  "session_complete": false
+  "session_complete": "in_progress"
 }
