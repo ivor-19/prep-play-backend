@@ -15,7 +15,7 @@ export const createSession = async (req, res) => {
       ...sessionData
     });
 
-    res.status(201).json({ state: "Success", data: session});
+    res.status(201).json({ state: "Success", message: "Session created successfully",data: session});
   } catch (error) {
     res.status(500).json({ state: "Failed", error: error.message });
   }
@@ -39,7 +39,7 @@ export const getSessionsBySocialWorker = async (req, res) => {
       }],
       order: [['created_at', 'DESC']]
     });
-    res.status(200).json({ state: "Success", data: sessions});
+    res.status(200).json({ state: "Success", message: "Sessions fetched successfully", data: sessions});
   } catch (error) {
     res.status(500).json({ state: "Failed", error: error.message });
   }
@@ -55,7 +55,7 @@ export const getAllSessions = async (req, res) => {
       }],
       order: [['created_at', 'DESC']]
     });
-    res.status().json({ state: "Success", data: sessions });
+    res.status(200).json({ state: "Success", message: "Sessions fetched successfully", data: sessions });
   } catch (error) {
     res.status(500).json({ state: "Failed", error: error.message });
   }
