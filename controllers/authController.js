@@ -22,12 +22,12 @@ export const login = async (req, res) => {
       } else if (user.condition === 'pending') {
         errorMessage = 'Account is pending approval. Please wait or contact support.';
       }
-      return res.status(403).json({ error: errorMessage });
+      return res.status(403).json({ status: "Failed", error: errorMessage });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ status: "Failed", error: 'Invalid email or password' });
     }
 
     const token = jwt.sign(
@@ -37,11 +37,24 @@ export const login = async (req, res) => {
     );
 
     res.status(200).json({
+      status: "Success",
       message: 'Login successful',
       token,
-      user: { id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name }
+      user: { 
+        id: user.id, 
+        email: user.email, 
+        first_name: user.first_name, 
+        last_name: user.last_name,
+        place_of_assignment: user.place_of_assignment,
+        role: user.role,
+        condition: user.condition,
+
+       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ 
+      status: "Failed",
+      error: err.message 
+    });
   }
 };
