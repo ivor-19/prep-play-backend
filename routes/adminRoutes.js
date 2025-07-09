@@ -7,6 +7,6 @@ import { authorize, verifyToken } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 // Protected endpoints
-router.get('/', verifyToken, authorize('admin'), getAllSessions);
+router.get('/childSessions/all', verifyToken, authorize('admin'), getAllSessions);
 
 export default router;

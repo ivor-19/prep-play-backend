@@ -8,9 +8,9 @@ import { verifyToken } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 // Public endpoints
-router.post('/', createSession);
+router.post('/createSession', createSession);
 
 // Protected endpoints
-router.get('/:id', verifyToken, getSessionsBySocialWorker);
+router.get('/:id/childSessions', verifyToken, getSessionsBySocialWorker);
 
 export default router;
