@@ -11,6 +11,6 @@ const router = express.Router();
 router.post('/createSession', createSession);
 
 // Protected endpoints
-router.get('/:id/childSessions', verifyToken, getSessionsBySocialWorker);
+router.get('/:social_worker_id/childSessions', verifyToken, getSessionsBySocialWorker);
 
 export default router;
