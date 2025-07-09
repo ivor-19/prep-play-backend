@@ -1,0 +1,26 @@
+{
+  "session_id": "unique_session_id",
+  "social_worker_id": "worker_id",
+  "child_id": "child_id",
+  "start_time": "timestamp",
+  "end_time": "timestamp",
+  "avatar": {
+    "head": "selected_option",
+    "hair": "selected_option",
+  },
+  "emotional_expression": {
+    "method": "Drawing/Feelings/Body Map",
+    "drawing_data": "base64_encoded_image_if_applicable",
+    "selected_feelings": ["Happy", "Anxious", "Confused"],
+    "body_map_annotations": [
+      {
+        "body_part": "head",
+        "note": "pain here"
+      }
+    ]
+  },
+ 
+  "session_notes": "social_worker_observations_message",
+  "tags": ["trauma", "family_issues", "behavioral"],
+  "session_complete": false
+}

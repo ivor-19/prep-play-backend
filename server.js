@@ -6,6 +6,8 @@ import { sequelize } from './config/database.js';
 
 import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import socialWorkerRoutes from './routes/socialWorkerRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use(express.json());
 // 🛣️ Routes
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/sw', socialWorkerRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 🚀 Sync and start server
 try {
