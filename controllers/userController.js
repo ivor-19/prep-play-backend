@@ -12,8 +12,8 @@ export const getUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   const { first_name, last_name, username, email, password, phone_number, place_of_assignment, role, condition } = req.body;
   try {
-    const usernameExists = await User.findOne({username})
-    const emailExists = await User.findOne({email})
+    const usernameExists = await User.findOne({ where: {username}})
+    const emailExists = await User.findOne({ where: {email}})
 
     if(usernameExists){
       return res.status(409).json({ success: false, error: "Username already exists"})
