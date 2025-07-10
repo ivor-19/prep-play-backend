@@ -79,14 +79,10 @@ export const ChildSession = sequelize.define('ChildSession', {
       key: 'id'
     }
   },
-  // child_id: {
-  //   type: DataTypes.UUID,
-  //   allowNull: false,
-  //   references: {
-  //     model: 'Children', // Assuming you have a Child model
-  //     key: 'id'
-  //   }
-  // },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   start_time: {
     type: DataTypes.DATE,
     allowNull: false,
@@ -95,6 +91,17 @@ export const ChildSession = sequelize.define('ChildSession', {
   end_time: {
     type: DataTypes.DATE,
     allowNull: true
+  },
+  child_data: {
+    type: DataTypes.JSON,
+    allowNull: false,
+    defaultValue: {
+      first_name: null,
+      last_name: null,
+      birthday: null,
+      age: null,
+      place_of_birth: null
+    }
   },
   avatar_data: {
     type: DataTypes.JSON,
@@ -124,9 +131,14 @@ export const ChildSession = sequelize.define('ChildSession', {
     defaultValue: []
   },
   status: {
-    type: DataTypes.ENUM('in_progress', 'completed', 'archived'),
+    type: DataTypes.ENUM('in_progress', 'completed', 'archived', 'cancelled', 'rescheduled'),
     allowNull: false,
     defaultValue: 'in_progress'
+  },
+  stage: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: '---'
   }
 }, {
   timestamps: true,
