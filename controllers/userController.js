@@ -70,7 +70,7 @@ export const updateInfo = async (req, res) => {
 
     await user.update(dataToUpdate)
 
-    res.status(200).json({ success: true, message: `User's info updated successfully`, data: dataToUpdate})
+    res.status(200).json({ success: true, message: `User's info updated successfully`, data: user})
   } catch (err) {
     res.status(500).json({ success: false, error: err.message})
   }
