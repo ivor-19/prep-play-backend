@@ -44,7 +44,15 @@ export const updateCondition = async (req, res) => {
 
     await user.update({condition: condition})
 
-    res.status(200).json({ success: true, message: `User condition updated from ${previousCondition} to ${condition}`, id: user.id, condition: user.condition})
+    res.status(200).json({ 
+      success: true, 
+      message: `User condition updated from ${previousCondition} to ${condition}`, 
+      data: {
+        id: user.id,
+        condition: user.condition
+      }
+    
+    })
   } catch (err) {
     res.status(500).json({ success: false, error: err.message})
   }
