@@ -4,8 +4,11 @@ import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/get', verifyToken, getUsers);
+// Public route
 router.post('/create', createUser);
+
+// Protected route
+router.get('/get', verifyToken, getUsers); // add auth for admin only
 router.put('/update/:id/condition', updateCondition);
 router.put('/update/:id/info', updateInfo);
 router.delete('/delete/:id', deleteUser);
