@@ -48,8 +48,7 @@ export const login = async (req, res) => {
         place_of_assignment: user.place_of_assignment,
         role: user.role,
         condition: user.condition,
-
-       }
+      }
     });
   } catch (err) {
     res.status(500).json({ 

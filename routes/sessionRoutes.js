@@ -8,7 +8,8 @@ const router = express.Router();
 router.post('/create', createSession);
 
 // Protected endpoints
-router.get('/:social_worker_id/list', verifyToken, getSessionsBySocialWorker);
-router.get('/all', verifyToken, authorize('admin'), getAllSessions);
+router.get('/:social_worker_id/list', getSessionsBySocialWorker);
+router.get('/all', getAllSessions);
+// router.get('/all', verifyToken, authorize('admin'), getAllSessions);
 
 export default router;
