@@ -21,6 +21,26 @@ export const createSession = async (req, res) => {
   }
 };
 
+export const updateSession = async (req, res) => {
+  const { session_id } = req.params;
+  const { social_worker_id, ...sessionToUpdate } = req.body;
+
+  try {
+    const session = await ChildSession.findByPk(session_id)
+
+    if (!session_id) {
+      return res.status(404).json({ success: false, message: "Session not found" })
+    }
+
+    await session.update(sessionToUpdate)
+
+    res.status(200).json({ success: true, message: `Sessions's info updated successfully`, data: session})
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message})
+  }
+
+}
+
 // Get sessions for a specific social worker
 export const getSessionsBySocialWorker = async (req, res) => {
   try {
@@ -45,6 +65,22 @@ export const getSessionsBySocialWorker = async (req, res) => {
   }
 };
 
+export const getSpecificSessionInfo = async (req, res)=> {
+  const { session_id } = req.params;
+  try {
+    const session = await ChildSession.findByPk(session_id)
+
+    if (!session) {
+      return res.status(404).json({ success: false, message: "Session not found" })
+    }
+
+    res.status(200).json({ success: true, message: `Session fetched successfully`, data: session})
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message})
+  }
+}
+
+// Admin
 export const getAllSessions = async (req, res) => {
   try {
     const sessions = await ChildSession.findAll({
@@ -60,3 +96,20 @@ export const getAllSessions = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+export const deleteSession = async (req, res) => {
+  const { session_id } = req.params;
+  try {
+    const session = await ChildSession.findByPk(session_id)
+
+    if (!session) {
+      return res.status(404).json({ success: false, message: "Session not found" })
+    }
+
+    await session.destroy()
+
+    res.status(200).json({ success: true, message: `Deleted successfully`, data: session})
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message})
+  }
+}

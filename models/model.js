@@ -85,7 +85,7 @@ export const ChildSession = sequelize.define('ChildSession', {
   },
   start_time: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
     defaultValue: DataTypes.NOW
   },
   end_time: {
@@ -94,7 +94,7 @@ export const ChildSession = sequelize.define('ChildSession', {
   },
   child_data: {
     type: DataTypes.JSON,
-    allowNull: false,
+    allowNull: true,
     defaultValue: {
       first_name: null,
       last_name: null,
@@ -138,7 +138,7 @@ export const ChildSession = sequelize.define('ChildSession', {
   stage: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: '---'
+    defaultValue: 'Stage 1'
   }
 }, {
   timestamps: true,
