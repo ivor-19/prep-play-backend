@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { User } from '../models/model.js'
 
 export const getUsers = async (req, res) => {
