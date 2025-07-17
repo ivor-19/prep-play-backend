@@ -2,8 +2,63 @@ import { User } from '../models/model.js'
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
-    res.status(200).json({ success: true, message: "Data fetched successfully", data: users })
+    const { search, page = 1, rowsPerPage = 10, role, condition, place_of_assignment } = req.query;
+    
+    const currentPage = parseInt(page);
+    const limit = parseInt(rowsPerPage);
+    const offset = (currentPage - 1) * limit;
+
+    const whereClause = {};
+    
+    // Search filter
+    if (search) {
+      whereClause[Op.or] = [
+        { first_name: { [Op.iLike]: `%${search}%` } },
+        { last_name: { [Op.iLike]: `%${search}%` } },
+        { username: { [Op.iLike]: `%${search}%` } },
+        { email: { [Op.iLike]: `%${search}%` } },
+      ];
+    }
+    
+    if (role) whereClause.role = role;
+    if (condition) whereClause.condition = condition;
+    if (place_of_assignment) whereClause.place_of_assignment = place_of_assignment;
+
+    const totalCount = await User.count({ where: whereClause });
+    const users = await User.findAll({
+      where: whereClause,
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']],
+      attributes: { exclude: ['password'] }
+    });
+
+    // If no users found
+    if (users.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No users found matching your criteria.",
+        data: [],
+        pagination: {
+          currentPage,
+          rowsPerPage: limit,
+          totalPages: Math.ceil(totalCount / limit),
+          totalCount,
+        }
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Data fetched successfully",
+      data: users,
+      pagination: {
+        currentPage,
+        rowsPerPage: limit,
+        totalPages: Math.ceil(totalCount / limit),
+        totalCount,
+      }
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

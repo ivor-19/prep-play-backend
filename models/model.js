@@ -23,8 +23,9 @@ export const User = sequelize.define('User', {
     allowNull: false
   },
   place_of_assignment: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.ENUM('Bontoc', 'Barlig', 'Bauko', 'Besao', 'Natonin', 'Paracelis', 'Sabangan', 'Sadanga', 'Sagada', 'Tadian'),
+    allowNull: false,
+    defaultValue: 'Bontoc' 
   },
   phone_number: {
     type: DataTypes.STRING,
