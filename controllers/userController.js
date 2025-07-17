@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
 
     const whereClause = {};
     
-    // Search filter
+    // Search filters
     if (search) {
       whereClause[Op.or] = [
         { first_name: { [Op.iLike]: `%${search}%` } },
