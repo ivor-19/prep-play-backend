@@ -36,3 +36,22 @@ export const getAllVideos = async (req, res) => {
 		res.status(500).json({ success: false, error: error.message });
 	}
 };
+
+export const deleteVideo = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const video = await Videos.findByPk(id);
+
+		if (!video) {
+			return res
+				.status(404)
+				.json({ success: false, message: "Video not found" });
+		}
+
+		await video.destroy();
+
+		res.status(200).json({ success: true, message: `Deleted successfully` });
+	} catch (err) {
+		res.status(500).json({ success: false, error: err.message });
+	}
+};

@@ -121,6 +121,7 @@ export const ChildSession = sequelize.define(
 				birthday: null,
 				age: null,
 				place_of_birth: null,
+				gender: null,
 			},
 		},
 		avatar_data: {
