@@ -13,6 +13,11 @@ export const addVideo = async (req, res) => {
 		const data = await Videos.create({
 			...videoData,
 		});
+		// const activity = await Activities.create({
+		// 	user: user.username,
+		// 	action: `Account deleted`,
+		// 	type: `delete`,
+		// });
 
 		res.status(201).json({
 			success: true,

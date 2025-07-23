@@ -1,4 +1,4 @@
-import { ChildSession, User } from "../models/model.js";
+import { Activities, ChildSession, User } from "../models/model.js";
 
 export const createSession = async (req, res) => {
 	try {
@@ -14,11 +14,17 @@ export const createSession = async (req, res) => {
 			social_worker_id,
 			...sessionData,
 		});
+		const activity = await Activities.create({
+			user: socialWorker.username,
+			action: `Session created`,
+			type: `create`,
+		});
 
 		res.status(201).json({
 			success: true,
-			message: "Session created successfully",
+			message: "📥 Session created successfully",
 			data: session,
+			activity: activity,
 		});
 	} catch (error) {
 		res.status(500).json({ success: false, error: error.message });
@@ -163,11 +169,21 @@ export const deleteSession = async (req, res) => {
 				.json({ success: false, message: "Session not found" });
 		}
 
-		await session.destroy();
+		const socialWorker = await User.findByPk(session.social_worker_id);
 
-		res
-			.status(200)
-			.json({ success: true, message: `Deleted successfully`, data: session });
+		await session.destroy();
+		const activity = await Activities.create({
+			user: socialWorker.username,
+			action: `❌ Session (${session.title}) deleted`,
+			type: `delete`,
+		});
+
+		res.status(200).json({
+			success: true,
+			message: `Deleted successfully`,
+			data: session,
+			activity: activity,
+		});
 	} catch (err) {
 		res.status(500).json({ success: false, error: err.message });
 	}

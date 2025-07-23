@@ -213,6 +213,34 @@ export const Videos = sequelize.define(
 	},
 );
 
+export const Activities = sequelize.define(
+	"Activities",
+	{
+		id: {
+			type: DataTypes.UUID,
+			defaultValue: DataTypes.UUIDV4,
+			primaryKey: true,
+			allowNull: false,
+		},
+		user: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		action: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		type: {
+			type: DataTypes.ENUM("registration", "update", "delete"),
+			allowNull: true,
+		},
+	},
+	{
+		timestamps: true,
+		underscored: true,
+	},
+);
+
 ChildSession.belongsTo(User, {
 	foreignKey: "social_worker_id",
 	as: "user",

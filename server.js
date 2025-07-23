@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 
 import { sequelize } from "./config/database.js";
+import activityRoutes from "./routes/activityRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -25,6 +26,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/videos", videoRoutes);
+app.use("/api/activities", activityRoutes);
 
 // 🚀 Sync and start server
 try {
