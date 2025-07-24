@@ -248,3 +248,33 @@ export const deleteUser = async (req, res) => {
 		res.status(500).json({ success: false, error: err.message });
 	}
 };
+
+export const updateProfilePicture = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await User.findByPk(id);
+
+		if (!user) {
+			return res
+				.status(404)
+				.json({ success: false, message: "User not found" });
+		}
+
+		// image file is uploaded by multer
+		if (!req.file || !req.file.path) {
+			return res.status(400).json({ success: false, message: "No image uploaded" });
+		}
+
+		// Save Cloudinary image URL to user
+		user.profile_picture = req.file.path;
+		await user.save();
+
+		res.status(200).json({
+			success: true,
+			message: `Profile picture changed`,
+			data: { profile_picture: user.profile_picture },
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, error: err.message });
+	}
+}

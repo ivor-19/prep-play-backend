@@ -63,6 +63,10 @@ export const User = sequelize.define(
 			allowNull: false,
 			defaultValue: "pending",
 		},
+		profile_picture: {
+			type: DataTypes.STRING,
+			allowNull: true
+		}
 	},
 	{
 		hooks: {
@@ -157,6 +161,7 @@ export const ChildSession = sequelize.define(
 				"completed",
 				"archived",
 				"cancelled",
+				"scheduled",
 				"rescheduled",
 			),
 			allowNull: false,
