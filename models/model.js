@@ -231,7 +231,7 @@ export const Activities = sequelize.define(
 			allowNull: true,
 		},
 		type: {
-			type: DataTypes.ENUM("registration", "update", "delete"),
+			type: DataTypes.STRING,
 			allowNull: true,
 		},
 	},
