@@ -234,6 +234,7 @@ export const Activities = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
+		//FIXED
 	},
 	{
 		timestamps: true,
