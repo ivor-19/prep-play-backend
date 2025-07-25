@@ -1,6 +1,7 @@
 import { endOfWeek, startOfWeek } from "date-fns";
 import { Op } from "sequelize";
 import { Activities, User } from "../models/model.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const getUsers = async (req, res) => {
 	try {
@@ -273,6 +274,39 @@ export const updateProfilePicture = async (req, res) => {
 			success: true,
 			message: `Profile picture changed`,
 			data: { profile_picture: user.profile_picture },
+		});
+	} catch (err) {
+		res.status(500).json({ success: false, error: err.message });
+	}
+}
+
+export const removeProfilePicture = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await User.findByPk(id);
+
+		if (!user || !user.profile_picture) {
+			return res.status(404).json({
+				success: false,
+				message: "User not found or no profile picture set",
+			});
+		}
+
+		// Extract public_id from URL
+		const urlParts = user.profile_picture.split("/");
+		const filename = urlParts.pop(); // last item
+		const folder = urlParts.pop();   // second last item
+		const publicId = `${folder}/${filename.split(".")[0]}`;
+
+		await cloudinary.uploader.destroy(publicId);
+
+		// Clear from DB
+		user.profile_picture = null;
+		await user.save();
+
+		res.status(200).json({
+			success: true,
+			message: `Profile picture removed`,
 		});
 	} catch (err) {
 		res.status(500).json({ success: false, error: err.message });
