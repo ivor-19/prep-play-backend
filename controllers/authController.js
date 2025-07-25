@@ -48,6 +48,7 @@ export const login = async (req, res) => {
         place_of_assignment: user.place_of_assignment,
         role: user.role,
         condition: user.condition,
+        profile_picture: user.profile_picture,
       }
     });
   } catch (err) {

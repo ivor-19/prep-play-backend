@@ -9,6 +9,7 @@ import sessionRoutes from "./routes/sessionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import videoRoutes from "./routes/videoRoutes.js";
 import { createDefaultAdmin } from "./seeder/createDefaultAdmin.js";
+import { seedVideos } from "./seeder/defaultVideos.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use("/api/activities", activityRoutes);
 try {
 	await sequelize.sync();
 	await createDefaultAdmin();
+	await seedVideos();
 	// await sequelize.sync({ alter: true }); // Alters existing tables to match models
 	// await sequelize.sync({ force: true }); // use { force: true } 	Drops and recreates all tables
 	console.log("✅ DB synced");

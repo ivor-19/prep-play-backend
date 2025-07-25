@@ -9,12 +9,13 @@ const router = express.Router();
 router.post('/create', createUser);
 
 // Protected route
-// router.get('/get', verifyToken, authorize('admin'), getUsers); // add auth for admin only
-router.get('/get', getUsers); // add auth for admin only
-router.put('/update/:id/condition', updateCondition);
-router.put('/update/:id/info', updateInfo);
-router.put('/update/:id/profile_picture', upload.single("image"), updateProfilePicture)
-router.delete('/remove/:id/profile_picture', removeProfilePicture)
-router.delete('/delete/:id', deleteUser);
+// router.get('/get', verifyToken, authorize('admin'), getUsers); 
+router.get('/get', verifyToken, authorize('admin'), getUsers); 
+router.put('/update/:id/condition', verifyToken, authorize('admin'), updateCondition);
+router.delete('/delete/:id', verifyToken, authorize('admin'), deleteUser);
+
+router.put('/update/:id/info', verifyToken, updateInfo);
+router.put('/update/:id/profile_picture', upload.single("image"), verifyToken, updateProfilePicture)
+router.delete('/remove/:id/profile_picture', verifyToken, removeProfilePicture)
 
 export default router;

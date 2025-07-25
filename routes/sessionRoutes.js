@@ -4,15 +4,13 @@ import { createSession, deleteSession, getAllSessions, getSessionsBySocialWorker
 
 const router = express.Router();
 
-// Public endpoints
-router.post('/create', createSession);
-
 // Protected endpoints
-router.get('/:social_worker_id/list', getSessionsBySocialWorker);
-router.get('/all', getAllSessions);
-router.get('/:session_id/details', getSpecificSessionInfo);
-router.put('/update/:session_id', updateSession);
-router.delete('/delete/:session_id', deleteSession);
-// router.get('/all', verifyToken, authorize('admin'), getAllSessions);
+router.get('/all', verifyToken, authorize('admin'), getAllSessions);
+
+router.post('/create', verifyToken, createSession);
+router.get('/:social_worker_id/list', verifyToken, getSessionsBySocialWorker);
+router.get('/:session_id/details', verifyToken, getSpecificSessionInfo);
+router.put('/update/:session_id', verifyToken, updateSession);
+router.delete('/delete/:session_id', verifyToken, deleteSession);
 
 export default router;
