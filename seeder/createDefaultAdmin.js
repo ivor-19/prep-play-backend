@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/model.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const createDefaultAdmin = async () => {
 	try {
@@ -9,14 +11,13 @@ export const createDefaultAdmin = async () => {
 		const existingAdmin = await User.findOne({ where: { email: adminEmail } });
 
 		if (!existingAdmin) {
-			const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
 			await User.create({
 				first_name: "Admin",
 				last_name: "Prep001",
 				username: "admin_pr001",
 				email: adminEmail,
-				password: hashedPassword,
+				password: adminPassword,
 				phone_number: "09123456789",
 				place_of_assignment: "Bontoc",
 				role: "admin",
