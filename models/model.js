@@ -136,6 +136,15 @@ export const ChildSession = sequelize.define(
 				hair: null,
 			},
 		},
+		event: {
+			type: DataTypes.JSON,
+			allowNull: true,
+			defaultValue: {
+				time: null,
+				weather: null,
+				place: null,
+			},
+		},
 		emotional_expression: {
 			type: DataTypes.JSON,
 			allowNull: true,
