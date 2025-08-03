@@ -22,6 +22,9 @@ export const login = async (req, res) => {
       } else if (user.condition === 'pending') {
         errorMessage = 'Account is pending approval. Please wait or contact support.';
       }
+        else if (user.condition === 'archived') {
+          errorMessage = 'Account is restricted. Please wait or contact support.';
+      }
       return res.status(403).json({ success: true, error: errorMessage });
     }
 
