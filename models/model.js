@@ -59,7 +59,7 @@ export const User = sequelize.define(
 			defaultValue: "social_worker", // Set default role
 		},
 		condition: {
-			type: DataTypes.ENUM("pending", "approved", "blocked", "rejected"),
+			type: DataTypes.ENUM("pending", "approved", "blocked", "rejected", "archived"),
 			allowNull: false,
 			defaultValue: "pending",
 		},
