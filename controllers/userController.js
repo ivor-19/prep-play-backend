@@ -250,6 +250,39 @@ export const deleteUser = async (req, res) => {
 	}
 };
 
+export const updateArchive = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const user = await User.findByPk(id)
+
+		if(!user){
+			return res.status(404).json({success: false, message: 'User not found'})
+		}
+
+		const previousCondition = user.condition;
+
+		await user.update({condition: 'archived'})
+		const activity = await Activities.create({
+			user: user.username,
+			action: `✏️ User archived`,
+			type: `update`,
+		});
+		res.status(200).json({
+			success: true,
+			message: `User condition updated from ${previousCondition} to archived`,
+			data: {
+				id: user.id,
+				condition: user.condition,
+			},
+			activity: activity,
+		});
+	}
+	catch (err){
+		res.status(500).json({success: false, error: err.message})
+	}
+}
+
 export const updateProfilePicture = async (req, res) => {
 	const { id } = req.params;
 	try {
