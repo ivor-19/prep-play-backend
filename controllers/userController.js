@@ -18,7 +18,12 @@ export const getUsers = async (req, res) => {
 		const limit = parseInt(rowsPerPage);
 		const offset = (currentPage - 1) * limit;
 
-		const whereClause = {};
+		const whereClause = { // hide the specific user from the list
+			[Op.and]: [
+				{ email: { [Op.ne]: "admin+PR001@prepplay.ph" } },
+				{ role: { [Op.ne]: "admin" } },
+			],
+		};
 
 		// Search filters
 		if (search) {
