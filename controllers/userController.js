@@ -350,3 +350,45 @@ export const removeProfilePicture = async (req, res) => {
 		res.status(500).json({ success: false, error: err.message });
 	}
 }
+
+export const getUserStatistics = async (req, res) => {
+	try {
+		const { period = 'all' } = req.query;
+
+		// Date filter based on period
+		let dateFilter = {};
+		const now = new Date();
+		
+		if (period === 'weekly') {
+			const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+			dateFilter.createdAt = { [Op.gte]: weekStart };
+		} else if (period === 'monthly') {
+			const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+			dateFilter.createdAt = { [Op.gte]: monthStart };
+		} else if (period === 'last3months') {
+			const threeMonthsAgo = new Date(now.setMonth(now.getMonth() - 3));
+			dateFilter.createdAt = { [Op.gte]: threeMonthsAgo };
+		}
+
+		// Get counts
+		const totalUsers = await User.count({ where: dateFilter });
+		const approvedCount = await User.count({ where: { condition: "approved", ...dateFilter } });
+		const rejectedCount = await User.count({ where: { condition: "rejected", ...dateFilter } });
+		const blockedCount = await User.count({ where: { condition: "blocked", ...dateFilter } });
+		const pendingCount = await User.count({ where: { condition: "pending", ...dateFilter } });
+
+		res.status(200).json({
+			success: true,
+			data: {
+				totalUsers,
+				approvedCount,
+				rejectedCount,
+				blockedCount,
+				pendingCount,
+			}
+		});
+
+	} catch (err) {
+		res.status(500).json({ success: false, error: err.message });
+	}
+};
